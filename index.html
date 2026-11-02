@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#172554">
+<title>Study Planner</title>
+<style>
+:root{--navy:#172554;--blue:#3156a6;--bg:#f4f6fb;--card:#fff;--ink:#172033;--muted:#68738a;--line:#e5e9f2;--green:#16845b;--amber:#b7791f;--red:#c04444}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}.shell{max-width:1180px;margin:auto;padding:22px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}.brand{display:flex;gap:12px;align-items:center}.logo{background:var(--navy);color:white;width:44px;height:44px;border-radius:14px;display:grid;place-items:center;font-weight:800}.brand h1{font-size:22px;margin:0}.brand p{margin:3px 0 0;color:var(--muted);font-size:13px}.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{border:1px solid var(--line);background:white;border-radius:10px;padding:9px 13px;color:var(--ink)}.btn.primary{background:var(--navy);color:white;border-color:var(--navy)}.btn.danger{color:var(--red)}.tabs{display:flex;gap:7px;overflow:auto;padding:5px;margin-bottom:18px;background:#e9edf6;border-radius:13px}.tab{border:0;background:transparent;color:#526078;padding:10px 13px;border-radius:9px;white-space:nowrap}.tab.active{background:white;color:var(--navy);font-weight:700;box-shadow:0 1px 4px #17255418}.page{display:none}.page.active{display:block}.hero{background:linear-gradient(120deg,#172554,#3156a6);color:white;padding:24px;border-radius:18px;margin-bottom:17px}.hero h2{margin:0 0 7px;font-size:23px}.hero p{margin:0;color:#dce5ff}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}.stat,.panel,.subject-card{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:17px}.stat small{color:var(--muted)}.stat strong{display:block;font-size:27px;margin-top:6px}.grid2{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}.panel h3{margin:0 0 13px;font-size:16px}.muted{color:var(--muted)}.subject-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.subject-card strong{display:block;margin-bottom:5px}.subject-card span{font-size:12px;color:var(--muted)}.progress{height:8px;background:#edf0f6;border-radius:99px;overflow:hidden;margin-top:12px}.progress i{display:block;height:100%;background:#5276c7;border-radius:99px}.day{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line);gap:10px}.day:last-child{border:0}.day select{max-width:230px}.field{display:flex;flex-direction:column;gap:6px;margin-bottom:13px}.field label{font-size:13px;color:#4d5870;font-weight:650}.field input,.field select,.field textarea,.filters input,.filters select{width:100%;border:1px solid #dce2ed;border-radius:9px;padding:10px;background:white;color:var(--ink)}textarea{min-height:90px;resize:vertical}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.wide{grid-column:1/-1}.form-actions{display:flex;gap:8px;flex-wrap:wrap}.log-item{border:1px solid var(--line);border-radius:12px;padding:13px;margin-top:9px;background:white}.log-head{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.tag{font-size:11px;padding:4px 8px;border-radius:99px;background:#eef2ff;color:#34539a}.tag.good{background:#e7f6ef;color:var(--green)}.tag.mid{background:#fff4df;color:var(--amber)}.tag.low{background:#ffeded;color:var(--red)}.filters{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:13px}.empty{padding:25px;text-align:center;color:var(--muted)}.month-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}.month-subject{padding:12px 0;border-bottom:1px solid var(--line)}.month-subject:last-child{border:0}.month-subject strong{display:flex;justify-content:space-between}.review-check{display:flex;gap:8px;align-items:center}.review-check input{width:auto}.footer{color:var(--muted);font-size:12px;text-align:center;margin:22px 0 5px}.notice{padding:11px 13px;border-radius:10px;background:#eef4ff;color:#35518e;font-size:13px;margin-bottom:13px}.hidden{display:none!important}
+@media(max-width:760px){.shell{padding:14px}.stats{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.subject-grid{grid-template-columns:repeat(2,1fr)}.filters{grid-template-columns:1fr 1fr}.brand h1{font-size:19px}.hero{padding:19px}.formgrid{grid-template-columns:1fr}.wide{grid-column:auto}}
+@media(max-width:420px){.subject-grid{grid-template-columns:1fr}.filters{grid-template-columns:1fr}.actions .btn{padding:8px 9px;font-size:12px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="top">
+ <div class="brand"><div class="logo">SP</div><div><h1>Study Planner</h1><p>วางแผน • บันทึก • ทบทวน • พัฒนา</p></div></div>
+ <div class="actions"><button class="btn" id="exportBtn">ส่งออกข้อมูล</button><button class="btn" id="importBtn">นำเข้าข้อมูล</button><input id="importFile" type="file" accept="application/json" class="hidden"></div>
+</header>
+<nav class="tabs" id="tabs">
+ <button class="tab active" data-page="dashboard">Dashboard</button><button class="tab" data-page="weekly">Weekly To-Do</button><button class="tab" data-page="log">Learning Log</button><button class="tab" data-page="history">Learning History</button><button class="tab" data-page="monthly">Monthly Overview</button><button class="tab" data-page="review">Review List</button>
+</nav>
+
+<section class="page active" id="dashboard">
+ <div class="hero"><h2 id="welcome">เริ่มต้นการเรียนรู้ของวันนี้</h2><p id="todayLine"></p></div>
+ <div class="stats">
+  <div class="stat"><small>บันทึกทั้งหมด</small><strong id="statLogs">0</strong></div><div class="stat"><small>วันที่มีการเรียน</small><strong id="statDays">0</strong></div><div class="stat"><small>หัวข้อที่ต้องทบทวน</small><strong id="statReview">0</strong></div><div class="stat"><small>XP สะสม</small><strong id="statXP">0</strong></div>
+ </div>
+ <div class="grid2"><div class="panel"><h3>ความคืบหน้ารายวิชา</h3><div class="subject-grid" id="subjectProgress"></div></div><div class="panel"><h3>บันทึกล่าสุด</h3><div id="recentLogs"></div></div></div>
+</section>
+
+<section class="page" id="weekly">
+ <div class="panel"><h3>ตารางเรียนประจำสัปดาห์</h3><p class="muted">กำหนดวิชาที่ต้องเรียนในแต่ละวัน ระบบจะนำไปแสดงใน Learning Log อัตโนมัติ</p><div id="weeklyRows"></div><div class="form-actions"><button class="btn primary" id="saveWeekly">บันทึกตาราง</button><button class="btn" id="resetWeekly">คืนค่าเริ่มต้น</button></div></div>
+</section>
+
+<section class="page" id="log">
+ <div class="panel"><h3>บันทึกการเรียน</h3><div class="notice" id="logDateNotice"></div>
+ <form id="logForm"><div class="formgrid">
+  <div class="field"><label for="logDate">วันที่เรียน</label><input id="logDate" type="date" required></div>
+  <div class="field"><label for="logSubject">วิชา</label><select id="logSubject" required></select></div>
+  <div class="field wide"><label for="logTopic">หัวข้อที่เรียน</label><input id="logTopic" required placeholder="เช่น กรด-เบส, เวกเตอร์, ระบบย่อยอาหาร"></div>
+  <div class="field wide"><label for="logDetail">รายละเอียด / สิ่งที่ได้เรียนรู้</label><textarea id="logDetail" placeholder="สรุปสั้น ๆ หรือจดสิ่งที่ยังสงสัย"></textarea></div>
+  <div class="field"><label for="logLevel">ระดับความเข้าใจ</label><select id="logLevel"><option value="good">เข้าใจดี</option><option value="mid">เข้าใจบางส่วน</option><option value="low">ยังไม่เข้าใจ</option></select></div>
+  <div class="field"><label for="logMinutes">เวลาเรียน (นาที)</label><input id="logMinutes" type="number" min="0" step="5" placeholder="เช่น 60"></div>
+  <div class="field wide"><label class="review-check"><input id="logReview" type="checkbox"> เพิ่มหัวข้อนี้ในรายการที่ต้องทบทวน</label></div>
+ </div><div class="form-actions"><button class="btn primary" type="submit" id="saveLogBtn">บันทึกการเรียน (+10 XP)</button><button class="btn" type="reset">ล้างแบบฟอร์ม</button></div></form></div>
+ <div class="panel" style="margin-top:14px"><h3>รายการที่บันทึกวันนี้</h3><div id="todayLogs"></div></div>
+</section>
+
+<section class="page" id="history">
+ <div class="panel"><h3>Learning History</h3><div class="filters"><input id="searchText" placeholder="ค้นหาหัวข้อ / รายละเอียด"><select id="filterSubject"><option value="">ทุกวิชา</option></select><select id="filterLevel"><option value="">ทุกระดับความเข้าใจ</option><option value="good">เข้าใจดี</option><option value="mid">เข้าใจบางส่วน</option><option value="low">ยังไม่เข้าใจ</option></select><input id="filterDate" type="date" aria-label="กรองวันที่"></div><div id="historyList"></div></div>
+</section>
+
+<section class="page" id="monthly">
+ <div class="panel"><div class="month-head"><div><h3 style="margin:0">Monthly Learning Overview</h3><p class="muted" style="margin:5px 0 0">สรุปเนื้อหาที่เรียนจาก Learning Log โดยตรง</p></div><input id="monthPicker" type="month"></div><div id="monthlySummary"></div></div>
+</section>
+
+<section class="page" id="review">
+ <div class="panel"><h3>Review List</h3><p class="muted">รวมรายการที่ทำเครื่องหมายว่าต้องทบทวน หรือบันทึกที่ยังไม่เข้าใจ</p><div id="reviewList"></div></div>
+</section>
+<div class="footer">ข้อมูลบันทึกไว้ในเบราว์เซอร์ของอุปกรณ์นี้โดยอัตโนมัติ • ควรส่งออกข้อมูลสำรองเป็นระยะ</div>
+</div>
+<script>
+const SUBJECTS=['คณิตศาสตร์','ฟิสิกส์','เคมี','ชีววิทยา','อังกฤษ','ไทย','สังคมศึกษา'];
+const DAYS=['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
+const DEFAULT_WEEK={'จันทร์':['เคมี'],'อังคาร':['ฟิสิกส์'],'พุธ':['ชีววิทยา'],'พฤหัสบดี':['อังกฤษ'],'ศุกร์':['คณิตศาสตร์'],'เสาร์':['คณิตศาสตร์','ฟิสิกส์'],'อาทิตย์':['ทบทวน / พักผ่อน']};
+const KEY='studyPlannerData_v1';
+let data=load();
+function load(){try{const d=JSON.parse(localStorage.getItem(KEY)||'{}');return {logs:Array.isArray(d.logs)?d.logs:[],weekly:d.weekly||DEFAULT_WEEK,review:Array.isArray(d.review)?d.review:[]}}catch{return {logs:[],weekly:structuredClone(DEFAULT_WEEK),review:[]}}}
+function save(){localStorage.setItem(KEY,JSON.stringify(data));renderAll()}
+function esc(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function today(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function dayName(date){return DAYS[new Date(date+'T12:00:00').getDay()]}
+function subjectsFor(date){return data.weekly[dayName(date)]||[]}
+function levelText(v){return v==='good'?'เข้าใจดี':v==='mid'?'เข้าใจบางส่วน':'ยังไม่เข้าใจ'}
+function levelClass(v){return v==='good'?'good':v==='mid'?'mid':'low'}
+function formatDate(s){return new Date(s+'T12:00:00').toLocaleDateString('th-TH',{day:'numeric',month:'short',year:'numeric'})}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function addReview(log){if(!data.review.some(x=>x.logId===log.id)){data.review.push({id:uid(),logId:log.id,subject:log.subject,topic:log.topic,done:false})}}
+function removeReviewForLog(id){data.review=data.review.filter(x=>x.logId!==id)}
+function renderSubjects(){document.getElementById('logSubject').innerHTML=SUBJECTS.map(s=>`<option>${s}</option>`).join('');document.getElementById('filterSubject').innerHTML='<option value="">ทุกวิชา</option>'+SUBJECTS.map(s=>`<option>${s}</option>`).join('')}
+function renderWeekly(){const holder=document.getElementById('weeklyRows');holder.innerHTML=['จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์','อาทิตย์'].map(day=>{let arr=data.weekly[day]||[];let opts=SUBJECTS.map(s=>`<option ${arr.includes(s)?'selected':''}>${s}</option>`).join('');return `<div class="day"><strong>${day}</strong><select multiple data-day="${day}" size="${day==='เสาร์'?3:2}" aria-label="วิชาวัน${day}">${opts}${day==='อาทิตย์'?'<option '+(arr.includes('ทบทวน / พักผ่อน')?'selected':'')+'>ทบทวน / พักผ่อน</option>':''}</select></div>`}).join('');}
+function renderDashboard(){const logs=data.logs;const days=new Set(logs.map(x=>x.date));document.getElementById('statLogs').textContent=logs.length;document.getElementById('statDays').textContent=days.size;document.getElementById('statReview').textContent=data.review.filter(x=>!x.done).length;document.getElementById('statXP').textContent=logs.length*10;const now=today();document.getElementById('todayLine').textContent=`${DAYS[new Date().getDay()]}ที่ ${new Date().toLocaleDateString('th-TH',{day:'numeric',month:'long',year:'numeric'})} • วิชาตามตาราง: ${subjectsFor(now).join(', ')||'ยังไม่ได้กำหนด'}`;document.getElementById('subjectProgress').innerHTML=SUBJECTS.map(s=>{let n=logs.filter(x=>x.subject===s).length;let pct=Math.min(100,n*10);return `<div class="subject-card"><strong>${s}</strong><span>${n} บันทึก</span><div class="progress"><i style="width:${pct}%"></i></div></div>`}).join('');const recent=[...logs].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,4);document.getElementById('recentLogs').innerHTML=recent.length?recent.map(logCard).join(''):'<div class="empty">ยังไม่มีบันทึกการเรียน</div>'}
+function logCard(x,buttons=true){return `<div class="log-item"><div class="log-head"><strong>${esc(x.topic)}</strong><span class="tag ${levelClass(x.level)}">${levelText(x.level)}</span></div><div class="muted" style="font-size:12px;margin:5px 0">${esc(x.subject)} • ${formatDate(x.date)}${x.minutes?` • ${x.minutes} นาที`:''}</div>${x.detail?`<div style="font-size:13px;white-space:pre-wrap">${esc(x.detail)}</div>`:''}${buttons?`<div class="form-actions" style="margin-top:9px"><button class="btn danger" onclick="deleteLog('${x.id}')">ลบ</button></div>`:''}</div>`}
+function renderLog(){const date=document.getElementById('logDate').value||today();document.getElementById('logDateNotice').textContent=`${dayName(date)} • วิชาตามตาราง: ${subjectsFor(date).join(', ')||'ยังไม่ได้กำหนด (เลือกวิชาเองได้)'}`;let suggested=subjectsFor(date).find(s=>SUBJECTS.includes(s));if(suggested&&!document.getElementById('logSubject').dataset.touched)document.getElementById('logSubject').value=suggested;const logs=data.logs.filter(x=>x.date===today()).sort((a,b)=>b.created-b.created);document.getElementById('todayLogs').innerHTML=logs.length?logs.map(x=>logCard(x)).join(''):'<div class="empty">ยังไม่มีบันทึกของวันนี้</div>'}
+function deleteLog(id){if(!confirm('ต้องการลบบันทึกนี้หรือไม่?'))return;data.logs=data.logs.filter(x=>x.id!==id);removeReviewForLog(id);save()}
+function renderHistory(){let q=document.getElementById('searchText').value.toLowerCase(),s=document.getElementById('filterSubject').value,l=document.getElementById('filterLevel').value,d=document.getElementById('filterDate').value;let rows=[...data.logs].filter(x=>(!q||(x.topic+' '+x.detail).toLowerCase().includes(q))&&(!s||x.subject===s)&&(!l||x.level===l)&&(!d||x.date===d)).sort((a,b)=>b.date.localeCompare(a.date));document.getElementById('historyList').innerHTML=rows.length?rows.map(x=>logCard(x)).join(''):'<div class="empty">ไม่พบประวัติการเรียนที่ตรงกับตัวกรอง</div>'}
+function renderMonthly(){let m=document.getElementById('monthPicker').value||today().slice(0,7);let rows=data.logs.filter(x=>x.date.startsWith(m));let count=rows.length;document.getElementById('monthlySummary').innerHTML=`<div class="stats"><div class="stat"><small>จำนวนบันทึก</small><strong>${count}</strong></div><div class="stat"><small>วันที่เรียน</small><strong>${new Set(rows.map(x=>x.date)).size}</strong></div><div class="stat"><small>เวลาเรียนรวม</small><strong>${rows.reduce((a,x)=>a+(+x.minutes||0),0)}</strong><small>นาที</small></div><div class="stat"><small>หัวข้อที่เรียน</small><strong>${new Set(rows.map(x=>x.topic)).size}</strong></div></div>`+SUBJECTS.map(s=>{let a=rows.filter(x=>x.subject===s).sort((x,y)=>x.date.localeCompare(y.date));return a.length?`<div class="month-subject"><strong><span>${s}</span><span>${a.length} หัวข้อ</span></strong><ul>${a.map(x=>`<li>${formatDate(x.date)} — ${esc(x.topic)} <span class="muted">(${levelText(x.level)})</span></li>`).join('')}</ul></div>`:''}).join('')+(count?'':'<div class="empty">เดือนนี้ยังไม่มีข้อมูลการเรียน</div>')}
+function renderReview(){document.getElementById('reviewList').innerHTML=data.review.length?data.review.map(x=>`<div class="log-item"><label class="review-check"><input type="checkbox" ${x.done?'checked':''} onchange="toggleReview('${x.id}',this.checked)"><strong style="${x.done?'text-decoration:line-through;color:#8791a3':''}">${esc(x.topic)}</strong></label><div class="muted" style="font-size:12px;margin:5px 0 0">${esc(x.subject)}</div><div class="form-actions" style="margin-top:8px"><button class="btn danger" onclick="deleteReview('${x.id}')">นำออก</button></div></div>`).join(''):'<div class="empty">ยังไม่มีหัวข้อที่ต้องทบทวน สามารถเพิ่มได้จาก Learning Log</div>'}
+function toggleReview(id,v){let x=data.review.find(a=>a.id===id);if(x)x.done=v;localStorage.setItem(KEY,JSON.stringify(data));renderDashboard();renderReview()}
+function deleteReview(id){data.review=data.review.filter(x=>x.id!==id);save()}
+function renderAll(){renderDashboard();renderWeekly();renderLog();renderHistory();renderMonthly();renderReview()}
+document.getElementById('tabs').addEventListener('click',e=>{let b=e.target.closest('[data-page]');if(!b)return;document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===b.dataset.page))});
+document.getElementById('logDate').value=today();document.getElementById('monthPicker').value=today().slice(0,7);renderSubjects();
+document.getElementById('logDate').addEventListener('change',()=>{delete document.getElementById('logSubject').dataset.touched;renderLog()});
+document.getElementById('logSubject').addEventListener('change',e=>e.target.dataset.touched='1');
+document.getElementById('logForm').addEventListener('submit',e=>{e.preventDefault();let log={id:uid(),date:document.getElementById('logDate').value,subject:document.getElementById('logSubject').value,topic:document.getElementById('logTopic').value.trim(),detail:document.getElementById('logDetail').value.trim(),level:document.getElementById('logLevel').value,minutes:document.getElementById('logMinutes').value,created:Date.now()};if(!log.topic)return;data.logs.push(log);if(document.getElementById('logReview').checked||log.level==='low')addReview(log);e.target.reset();document.getElementById('logDate').value=today();delete document.getElementById('logSubject').dataset.touched;save();document.getElementById('logSubject').value=subjectsFor(today()).find(s=>SUBJECTS.includes(s))||SUBJECTS[0];alert('บันทึกสำเร็จ! ได้รับ 10 XP')});
+document.getElementById('saveWeekly').onclick=()=>{document.querySelectorAll('[data-day]').forEach(el=>data.weekly[el.dataset.day]=[...el.selectedOptions].map(o=>o.value));save();alert('บันทึกตารางประจำสัปดาห์แล้ว')};
+document.getElementById('resetWeekly').onclick=()=>{if(confirm('คืนค่าตารางเริ่มต้นหรือไม่?')){data.weekly=structuredClone(DEFAULT_WEEK);save()}};
+['searchText','filterSubject','filterLevel','filterDate'].forEach(id=>document.getElementById(id).addEventListener('input',renderHistory));
+document.getElementById('monthPicker').addEventListener('change',renderMonthly);
+document.getElementById('exportBtn').onclick=()=>{let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='study-planner-backup.json';a.click();URL.revokeObjectURL(url)};
+document.getElementById('importBtn').onclick=()=>document.getElementById('importFile').click();
+document.getElementById('importFile').onchange=async e=>{let f=e.target.files[0];if(!f)return;try{let d=JSON.parse(await f.text());if(!Array.isArray(d.logs)||!d.weekly)throw Error();if(confirm('นำเข้าข้อมูลจะแทนที่ข้อมูลปัจจุบัน ต้องการดำเนินการต่อหรือไม่?')){data={logs:d.logs,weekly:d.weekly,review:Array.isArray(d.review)?d.review:[]};save();alert('นำเข้าข้อมูลสำเร็จ')}}catch{alert('ไฟล์ไม่ถูกต้องหรืออ่านไม่ได้')}e.target.value=''};
+renderAll();
+</script>
+</body></html>
